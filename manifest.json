@@ -1,22 +1,26 @@
 {
-  "name": "Запускаем снежинки на любом сайте",
-  "description": "Проект журнала Код",
+  "name": "Arcadia review request image generator",
+  "description": "Generate image with lines count diff to request review",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["activeTab", "scripting"],
+  "content_scripts": [{
+    "js": ["foreground.js"],
+    "matches": ["https://a.yandex-team.ru/review/*"]
+  }],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "/img/get_started16.png",
-      "32": "/img/get_started32.png",
-      "48": "/img/get_started48.png",
-      "128": "/img/get_started128.png"
+      "16": "/image/get_started16.png",
+      "32": "/image/get_started32.png",
+      "48": "/image/get_started48.png",
+      "128": "/image/get_started128.png"
     }
   },
   "icons": {
-    "16": "/img/get_started16.png",
-    "32": "/img/get_started32.png",
-    "48": "/img/get_started48.png",
-    "128": "/img/get_started128.png"
+    "16": "/image/get_started16.png",
+    "32": "/image/get_started32.png",
+    "48": "/image/get_started48.png",
+    "128": "/image/get_started128.png"
   }
 }
