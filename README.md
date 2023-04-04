@@ -1,1 +1,1 @@
-Simple browser extention
+Simple browser extension
