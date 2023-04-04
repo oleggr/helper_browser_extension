@@ -6,7 +6,8 @@
   "permissions": ["activeTab", "scripting"],
   "content_scripts": [{
     "js": ["foreground.js"],
-    "matches": ["https://a.yandex-team.ru/review/*"]
+    "matches": ["https://a.yandex-team.ru/review/*"],
+    "run_at" : "document_idle"
   }],
   "action": {
     "default_popup": "popup/popup.html",
