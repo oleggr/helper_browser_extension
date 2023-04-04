@@ -65,8 +65,6 @@ async function start() {
     for (let step = 0; step < 20; step++) {
         // let parent = document.getElementsByClassName("review-head-controls")[0]
         let parent = document.getElementsByClassName("pr-navigation__stats")[0]
-        console.log('parent:')
-        console.log(parent)
 
         if (typeof parent != "undefined") {
             parent.appendChild(btn);
