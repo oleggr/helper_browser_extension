@@ -46,7 +46,17 @@ btn.addEventListener("click", async () => {
 });
 
 async function genImage() {
-    let taskNumber = document.getElementsByClassName('pr-info-tickets__ticket-name')[0].innerText;
+    let taskDescription = document.getElementsByClassName('review-head-summary-headline__headline')[0].innerText.split('/');
+    let taskNumberReserve = taskDescription[taskDescription.length - 1]
+
+    let taskData = document.getElementsByClassName('pr-info-tickets__ticket-name')
+    let taskNumber = taskNumberReserve
+
+    if (typeof taskData != "undefined" && taskData.length > 0) {
+        console.log('Using task number from Tickets section')
+        taskData[0].innerText;
+    }
+    
     let added = document.getElementsByClassName("diff-stat__additions")[0].innerText;
     let removed = document.getElementsByClassName("diff-stat__deletions")[0].innerText;
     
@@ -66,7 +76,7 @@ async function genImage() {
         const vMiddle = canvas.height / 2;
         
         ctx.textAlign = "right";
-        ctx.font = "10px monospace";
+        ctx.font = "20px monospace";
         ctx.fillStyle = "black";
         ctx.textAlign = "right";           
         ctx.fillText("Review Request", hMiddle - 5, 20);
@@ -76,7 +86,7 @@ async function genImage() {
         ctx.fillText(added, hMiddle - 5, vMiddle + 15);
     
         ctx.textAlign = "left";
-        ctx.font = "bold 10px monospace";
+        ctx.font = "bold 20px monospace";
         ctx.fillStyle = "#5282ff";
         ctx.fillText(taskNumber, hMiddle + 5, 20);
     
