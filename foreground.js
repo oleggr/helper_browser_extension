@@ -19,7 +19,7 @@ var styles = `
 }
 
 .button2 {
-    background-color: #94ffa4;
+    background-color: #56db6a;
     color: black;
     border: 2px solid #e7e7e7;
     padding: 5px 10px;
