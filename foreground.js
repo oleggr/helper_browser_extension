@@ -1,34 +1,15 @@
 
 var styles = `
-.button1 {
-    background-color: white;
+.create-diff-image-btn {
+    background-color: transparent;
     color: black;
-    border: 2px solid #e7e7e7;
-    padding: 5px 10px;
+    border: none;
+    padding: 0px ;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 2px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-.button1:hover {
-    background-color: #e7e7e7;   
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-.button2 {
-    background-color: #56db6a;
-    color: black;
-    border: 2px solid #e7e7e7;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 2px 2px;
-    transition-duration: 0.4s;
+    margin-right: 5px;
     cursor: pointer;
 }
 `
@@ -38,11 +19,19 @@ styleSheet.innerText = styles
 document.head.appendChild(styleSheet)
 
 let btn = document.createElement("button");
-btn.innerHTML = "Generate image";
-// btn.style.display = 'block';
-btn.className = 'button1';
+btn.innerHTML = "📷";
+btn.title = 'Copy image to clipboard';
+btn.className = 'create-diff-image-btn';
+
 btn.addEventListener("click", async () => {
     await genImage()
+    
+    for (let i = 0; i < 3; i++) {
+        await new Promise(r => setTimeout(r, 200));
+        btn.innerHTML = '📸';
+        await new Promise(r => setTimeout(r, 200));
+        btn.innerHTML = '📷';
+    }
 });
 
 async function genImage() {
@@ -56,10 +45,10 @@ async function genImage() {
         console.log('Using task number from Tickets section')
         taskData[0].innerText;
     }
-    
+
     let added = document.getElementsByClassName("diff-stat__additions")[0].innerText;
     let removed = document.getElementsByClassName("diff-stat__deletions")[0].innerText;
-    
+
     var canvas = document.createElement('canvas');
     canvas.id = 'canvas';
     canvas.width = 400;
@@ -71,25 +60,25 @@ async function genImage() {
 
     function drawNumber() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
         const hMiddle = canvas.width / 2;
         const vMiddle = canvas.height / 2;
-        
+
         ctx.textAlign = "right";
         ctx.font = "20px monospace";
         ctx.fillStyle = "black";
-        ctx.textAlign = "right";           
+        ctx.textAlign = "right";
         ctx.fillText("Review Request", hMiddle - 5, 20);
-    
+
         ctx.font = "40px monospace";
         ctx.fillStyle = "green";
         ctx.fillText(added, hMiddle - 5, vMiddle + 15);
-    
+
         ctx.textAlign = "left";
         ctx.font = "bold 20px monospace";
         ctx.fillStyle = "#5282ff";
         ctx.fillText(taskNumber, hMiddle + 5, 20);
-    
+
         ctx.font = "40px monospace";
         ctx.fillStyle = "red";
         ctx.fillText(removed, hMiddle + 5, vMiddle + 15);
@@ -107,28 +96,51 @@ async function genImage() {
 
     copyToClipboard();
 
-    btn.className = 'button2';
-    await new Promise(r => setTimeout(r, 1000));
-    btn.className = 'button1';
-
     document.body.removeChild(canvas);
 }
 
-// place_for_button = 'review-head-controls'
-// place_for_button = 'pr-navigation__stats'
-place_for_button = 'navigation__column'
+function waitForElement(selector) {
+    return new Promise(
+        (resolve) => {
+            if (document.querySelector(selector)) {
+                return resolve(element);
+            }
+            const observer = new MutationObserver(() => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    console.log('element found')
+                    resolve(element); 
+                    createButton(element);
+                    // observer.disconnect();
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true, });
+        });
+}
+
+function createButton(element) {
+    // if button already exists, do nothing
+    if (document.getElementById('createDiffImageWrapper')) {
+        return;
+    }
+
+    // get parent element
+    let parent = element.parentElement;
+    let newDiv = document.createElement('div');
+    newDiv.className = 'navigation__column';
+    newDiv.id = 'createDiffImageWrapper';
+    newDiv.appendChild(btn);
+
+    // insert new div before parent element
+    parent.parentNode.insertBefore(newDiv, parent);
+}
 
 async function start() {
-    for (let step = 0; step < 20; step++) {
-        let parent = document.getElementsByClassName(place_for_button)[0]
+    console.log('start')
 
-        if (typeof parent != "undefined") {
-            parent.appendChild(btn);
-            break
-        }
-
-        await new Promise(r => setTimeout(r, 1000));
-    }
+    waitForElement('.pr-navigation__stats').then((element) => {
+        console.log('Element is ready');
+    });
 }
 
 start();
