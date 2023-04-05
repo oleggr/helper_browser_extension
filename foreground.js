@@ -4,13 +4,18 @@ var styles = `
     background-color: transparent;
     color: black;
     border: none;
-    padding: 0px ;
+    padding: 0px 4px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
     margin-right: 5px;
     cursor: pointer;
+}
+
+.create-diff-image-btn:hover {
+    background-color: #e7e7e7;   
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 `
 

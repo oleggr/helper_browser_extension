@@ -6,7 +6,7 @@
   "permissions": ["activeTab", "scripting"],
   "content_scripts": [{
     "js": ["foreground.js"],
-    "matches": ["https://a.yandex-team.ru/review/*"],
+    "matches": ["https://a.yandex-team.ru/*"],
     "run_at" : "document_idle"
   }],
   "action": {
