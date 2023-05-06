@@ -43,6 +43,10 @@ async function genImage() {
     let taskDescription = document.getElementsByClassName('review-head-summary-headline__headline')[0].innerText.split('/');
     let taskNumberReserve = taskDescription[taskDescription.length - 1]
 
+    if (taskNumberReserve.indexOf('_') > -1) {
+        taskNumberReserve = taskNumberReserve.split('_')[0];
+    }
+
     let taskData = document.getElementsByClassName('pr-info-tickets__ticket-name')
     let taskNumber = taskNumberReserve
 
